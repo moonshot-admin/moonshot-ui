@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Icon, IconName } from '@/app/components/IconSVG';
 import {
   useSendPromptMutation,
@@ -178,6 +178,18 @@ function ManualRedTeaming(props: ActiveSessionProps) {
       setPromptText('');
     }
   }, [sendPromptIsLoading]);
+
+  useLayoutEffect(() => {
+    chatBoxRefs.current.forEach((ref) => {
+      if (ref) {
+        ref.scrollTop = ref.scrollHeight;
+      }
+    });
+  }, [activeSession])
+
+  // useLayoutEffect(() => {
+
+  // }, [activeSession])
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
